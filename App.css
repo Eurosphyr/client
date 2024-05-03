@@ -1,0 +1,123 @@
+*{
+    box-sizing: border-box;
+}
+
+body{
+    background-color: #f5f5f5;
+}   
+
+.container{
+    padding: 10px;
+    max-width: 700px;
+    margin: 50px auto;
+    /* background-color: #18a2b8; */
+}
+
+.btn{
+    padding: 7px 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+}
+
+.btn-add{
+    background-color: #343a40;
+    color: #fff;
+    cursor: pointer;
+}
+
+.addContainer{
+    /* position: absolute; */
+    background-color: #4CAF50;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.addContainer form{
+    display: flex;
+    width: 420px;
+    flex-direction: column;
+    padding: 50px, 40px;
+    background-color: red;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+}
+
+.addContainer form input{
+    padding: 10px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 5px;
+}
+
+.addContainer form button{
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #343a40;
+    color: #fff;
+    cursor: pointer;
+}
+
+.addContainer form label{
+    font-size: 20px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.addContainer form .close{
+    margin-left: auto;
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+}
+
+.dataContainer table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+}
+
+.dataContainer table thead tr th tbody{
+    min-width: 100px;
+    background-color: #f0eaea;
+    padding: 10px;
+}
+
+.dataContainer table tbody tr td{
+    padding: 10px;
+    text-align: center;
+}
+
+.btn-delete{
+    background-color: #dc3545;
+    color: #fff;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin : 5px;
+}
+
+.btn-edit{
+    background-color: #007bff;
+    color: #fff;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin : 5px;
+}
