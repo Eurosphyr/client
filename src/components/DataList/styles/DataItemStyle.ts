@@ -18,6 +18,11 @@ const DataItemStyles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 5,
   },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 10,
+  },
 });
 
 export default DataItemStyles;

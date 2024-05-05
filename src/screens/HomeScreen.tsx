@@ -60,8 +60,6 @@ const HomeScreen = () => {
   return (
     <ScrollView>
       <View style={HomeScreenStyles.container}>
-        <Button title='Add' onPress={() => setAddSection(true)} />
-
         {
           addSection && (
             <AddForm
@@ -73,7 +71,10 @@ const HomeScreen = () => {
           )
         }
 
-        <DataList dataList={dataList} handleDelete={handleDelete} />
+        <DataList dataList={dataList} handleDelete={handleDelete} handleEdit={handleChange} />
+        <View style={HomeScreenStyles.addButtonContainer} >
+          <Button title='Add' onPress={() => setAddSection(true)}  />
+        </View>
       </View>
     </ScrollView>
   );

@@ -6,6 +6,9 @@ const HomeScreenStyles = StyleSheet.create({
     padding: 20,
     backgroundColor: '#FFFFFF',
   },
+  addButtonContainer: {
+    marginBottom: 20,
+  }
 });
 
 export default HomeScreenStyles;
