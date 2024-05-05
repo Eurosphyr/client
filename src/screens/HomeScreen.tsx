@@ -3,6 +3,7 @@ import { View, Button, Text, ScrollView } from 'react-native';
 import AddForm from '../components/AddForm/AddForm';
 import DataList from '../components/DataList/DataList';
 import api from '../services/api';
+import HomeScreenStyles from './styles/HomeScreenStyle/HomeScreenStyle';
 
 const HomeScreen = () => {
   const [addSection, setAddSection] = useState(false);
@@ -58,7 +59,7 @@ const HomeScreen = () => {
 
   return (
     <ScrollView>
-      <View>
+      <View style={HomeScreenStyles.container}>
         <Button title='Add' onPress={() => setAddSection(true)} />
 
         {
