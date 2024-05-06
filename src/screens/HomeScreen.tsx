@@ -20,11 +20,11 @@ const HomeScreen: React.FC = () => {
   const [editSection, setEditSection] = useState<boolean>(false);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [formData, setFormData] = useState<FormData>({
-    name: ' ',
-    email: ' ',
-    phone: ' ',
-    password: ' ',
-    _id: ' '
+    name: '',
+    email: '',
+    phone: '',
+    password: '',
+    _id: ''
   });
   const [dataList, setDataList] = useState<any[]>([]);
 
