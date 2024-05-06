@@ -48,37 +48,48 @@ const HomeScreen: React.FC = () => {
   const handleSubmit = async () => {
     try {
       if (isEditing) {
-        // Check if formData.id is truthy before making the PUT request
         if (formData._id) {
           await api.put(`/update/${formData._id}`, formData);
+          // If editing, fetch updated data after successful update
+          fetchData();
+          setAddSection(false);
+          setIsEditing(false);
         } else {
           console.error('ID is undefined. Cannot update.');
           return;
         }
       } else {
-        const response = await api.post('/create', formData);
-        // Set the ID from the response
-        setFormData(prevState => ({ ...prevState, id: response.data.id }));
+        const { _id, ...newUserData } = formData;
+        const response = await api.post('/create', newUserData);
+        if (response.data && response.status === 200) {
+          console.log('New user created:', response.data);
+          // If creating a new user, fetch updated data after successful creation
+          fetchData();
+          setFormData({
+            name: '',
+            email: '',
+            phone: '',
+            password: '',
+            _id: ''
+          });
+          setAddSection(false);
+          setIsEditing(false);
+        } else {
+          console.error('Failed to create new user.');
+          return;
+        }
       }
-      fetchData();
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        password: '',
-        _id: ''
-      });
-      setAddSection(false);
-      setIsEditing(false);
     } catch (err) {
       console.error(err);
     }
   }
   
+  
+  
 
-  const handleDelete = async (id: string) => {
+  const handleDelete = async (_id: string) => {
     try {
-      await api.delete(`/delete/${id}`);
+      await api.delete(`/delete/${_id}`);
       fetchData();
     } catch (err) {
       console.error(err);
