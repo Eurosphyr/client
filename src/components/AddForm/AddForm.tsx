@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, TextInput, Button } from 'react-native';
-import AddFormStyles from './styles/AddFormStyle'; // Import styles from the separate file
-
+import AddFormStyles from './styles/AddFormStyle'; 
 const AddForm = ({ handleSubmit, handleChange, formData, setAddSection }: any) => {
   return (
     <View style={AddFormStyles.container}>

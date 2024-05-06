@@ -1,43 +1,36 @@
+// HomeScreen.tsx
+
 import React, { useState, useEffect } from 'react';
-import { View, Button, Text, ScrollView } from 'react-native';
+import { View, Button, ScrollView } from 'react-native';
 import AddForm from '../components/AddForm/AddForm';
 import DataList from '../components/DataList/DataList';
 import api from '../services/api';
 import HomeScreenStyles from './styles/HomeScreenStyle/HomeScreenStyle';
 
-const HomeScreen = () => {
-  const [addSection, setAddSection] = useState(false);
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    password: ''
+interface FormData {
+  name: string;
+  email: string;
+  phone: string;
+  password: string;
+  _id: string;
+}
+
+const HomeScreen: React.FC = () => {
+  const [addSection, setAddSection] = useState<boolean>(false);
+  const [editSection, setEditSection] = useState<boolean>(false);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [formData, setFormData] = useState<FormData>({
+    name: ' ',
+    email: ' ',
+    phone: ' ',
+    password: ' ',
+    _id: ' '
   });
-  const [dataList, setDataList] = useState([]);
+  const [dataList, setDataList] = useState<any[]>([]);
 
   useEffect(() => {
     fetchData();
   }, []);
-
-  const handleChange = (name: any, value: any) => {
-    setFormData({ ...formData, [name]: value });
-  }
-
-  const handleSubmit = async () => {
-    try {
-      await api.post('/create', formData);
-      fetchData();
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        password: ''
-      });
-      setAddSection(false);
-    } catch (err) {
-      console.error(err);
-    }
-  }
 
   const fetchData = async () => {
     try {
@@ -48,7 +41,42 @@ const HomeScreen = () => {
     }
   }
 
-  const handleDelete = async (id: any) => {
+  const handleChange = (name: keyof FormData, value: string) => {
+    setFormData({ ...formData, [name]: value });
+  }
+
+  const handleSubmit = async () => {
+    try {
+      if (isEditing) {
+        // Check if formData.id is truthy before making the PUT request
+        if (formData._id) {
+          await api.put(`/update/${formData._id}`, formData);
+        } else {
+          console.error('ID is undefined. Cannot update.');
+          return;
+        }
+      } else {
+        const response = await api.post('/create', formData);
+        // Set the ID from the response
+        setFormData(prevState => ({ ...prevState, id: response.data.id }));
+      }
+      fetchData();
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        password: '',
+        _id: ''
+      });
+      setAddSection(false);
+      setIsEditing(false);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+  
+
+  const handleDelete = async (id: string) => {
     try {
       await api.delete(`/delete/${id}`);
       fetchData();
@@ -57,23 +85,29 @@ const HomeScreen = () => {
     }
   }
 
+  const handleEdit = (item: FormData) => {
+    console.log('User information:', item);
+    setFormData(item);
+    setIsEditing(true);
+    setEditSection(true);
+    setAddSection(true);
+  }
+
   return (
     <ScrollView>
       <View style={HomeScreenStyles.container}>
-        {
-          addSection && (
-            <AddForm
-              handleSubmit={handleSubmit}
-              handleChange={handleChange}
-              formData={formData}
-              setAddSection={setAddSection}
-            />
-          )
-        }
+        {addSection && (
+          <AddForm
+            handleSubmit={handleSubmit}
+            handleChange={handleChange}
+            formData={formData}
+            setAddSection={setAddSection}
+          />
+        )}
 
-        <DataList dataList={dataList} handleDelete={handleDelete} handleEdit={handleChange} />
-        <View style={HomeScreenStyles.addButtonContainer} >
-          <Button title='Add' onPress={() => setAddSection(true)}  />
+        <DataList dataList={dataList} handleDelete={handleDelete} handleEdit={handleEdit} />
+        <View style={HomeScreenStyles.addButtonContainer}>
+          <Button title='Add' onPress={() => setAddSection(true)} />
         </View>
       </View>
     </ScrollView>
